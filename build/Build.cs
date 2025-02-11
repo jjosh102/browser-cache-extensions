@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -13,19 +11,18 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     GitHubActionsImage.UbuntuLatest,
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Pack), nameof(Publish) },
-    ImportSecrets = new[] { "NUGET_API_KEY" })]
+    ImportSecrets = new[] { "NUGET_API_KEY" },
+    AutoGenerate =false)]
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
 
     [Parameter] readonly string Configuration = "Release";
-    [Parameter()][Secret] readonly string NugetApiKey;
+    [Parameter][Secret] readonly string NugetApiKey;
+    [Parameter] readonly string Version;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
-
-    [GitVersion(NoFetch = true)]
-    readonly GitVersion GitVersion;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -51,6 +48,7 @@ class Build : NukeBuild
                 .ForEach(project => DotNetBuild(s => s
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
+                    .SetVersion(Version?.TrimStart('v'))
                     .EnableNoRestore()));
         });
 
@@ -63,7 +61,7 @@ class Build : NukeBuild
                 DotNetPack(s => s
                     .SetProject(project)
                     .SetConfiguration(Configuration)
-                    .SetVersion(GitVersion.NuGetVersionV2)
+                    .SetVersion(Version?.TrimStart('v'))
                     .SetOutputDirectory(ArtifactsDirectory));
             }
         });
