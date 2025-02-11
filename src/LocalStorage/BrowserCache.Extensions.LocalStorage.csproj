@@ -9,9 +9,9 @@
     <PackageIcon>jjosh-logo.png</PackageIcon>
     <Authors>jjosh102</Authors>
     <Description>BrowserCacheExtensions is a collection of extensions designed to cache non-confidential data in the browser.</Description>
-    <PackageId>LocalStorage.Extensions</PackageId>
-    <PackageProjectUrl>https://github.com/jjosh102/LocalStorage.Extensions</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/jjosh102/LocalStorage.Extensions</RepositoryUrl>
+    <PackageId>BrowserCache.Extensions</PackageId>
+    <PackageProjectUrl>https://www.nuget.org/packages/BrowserCache.Extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jjosh102/browser-cache-extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageReadmeFile>README.md</PackageReadmeFile>
