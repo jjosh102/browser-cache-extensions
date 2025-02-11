@@ -1,12 +1,15 @@
 using System;
+using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[GitHubActions("deploy-to-nuget",
+[GitHubActions(
+    "deploy-to-nuget",
     GitHubActionsImage.UbuntuLatest,
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Pack), nameof(Publish) },
@@ -21,6 +24,9 @@ class Build : NukeBuild
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
+    [GitVersion(NoFetch = true)]
+    readonly GitVersion GitVersion;
+
     Target Clean => _ => _
         .Executes(() =>
         {
@@ -33,20 +39,23 @@ class Build : NukeBuild
         .Executes(() =>
         {
             SourceDirectory.GlobFiles(SourceDirectory, "**/*.csproj")
-            .ForEach(project => DotNetRestore(s => s.SetProjectFile(project)));
+                .ForEach(project => DotNetRestore(s => s
+                    .SetProjectFile(project)));
         });
 
     Target Compile => _ => _
-     .DependsOn(Restore)
-     .Executes(() =>
-     {
-         SourceDirectory.GlobFiles(SourceDirectory, "**/*.csproj")
-             .ForEach(project => DotNetBuild(s => s
-                 .SetProjectFile(project)
-                 .SetConfiguration(Configuration)
-                 .EnableNoRestore()));
-     });
-
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
+            SourceDirectory.GlobFiles(SourceDirectory, "**/*.csproj")
+                .ForEach(project => DotNetBuild(s => s
+                    .SetProjectFile(project)
+                    .SetConfiguration(Configuration)
+                    .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                    .SetFileVersion(GitVersion.AssemblySemFileVer)
+                    .SetInformationalVersion(GitVersion.InformationalVersion)
+                    .EnableNoRestore()));
+        });
 
     Target Pack => _ => _
         .DependsOn(Compile)
@@ -57,6 +66,7 @@ class Build : NukeBuild
                 DotNetPack(s => s
                     .SetProject(project)
                     .SetConfiguration(Configuration)
+                    .SetVersion(GitVersion.NuGetVersionV2)
                     .SetOutputDirectory(ArtifactsDirectory));
             }
         });
@@ -66,10 +76,9 @@ class Build : NukeBuild
         .Requires(() => NugetApiKey)
         .Executes(() =>
         {
-
             DotNetNuGetPush(s => s
-                  .SetTargetPath(ArtifactsDirectory / "*.nupkg")
-                  .SetSource("https://api.nuget.org/v3/index.json")
-                  .SetApiKey(NugetApiKey));
+                .SetTargetPath(ArtifactsDirectory / "*.nupkg")
+                .SetSource("https://api.nuget.org/v3/index.json")
+                .SetApiKey(NugetApiKey));
         });
 }
