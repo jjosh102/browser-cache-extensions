@@ -4,10 +4,29 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>BrowserCache.Extensions</Title>
+    <Version>0.1.0-alpha</Version>
+    <PackageIcon>jjosh-logo.png</PackageIcon>
+    <Authors>jjosh102</Authors>
+    <Description>A simple library that cache data into the browsers local storage.</Description>
+    <PackageId>LocalStorage.Extensions</PackageId>
+    <PackageProjectUrl>https://github.com/jjosh102/LocalStorage.Extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jjosh102/LocalStorage.Extensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <None Include="..\..\content\jjosh-logo.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
   
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>
