@@ -8,7 +8,7 @@
     <Version>0.1.0-alpha</Version>
     <PackageIcon>jjosh-logo.png</PackageIcon>
     <Authors>jjosh102</Authors>
-    <Description>A simple library that cache data into the browsers local storage.</Description>
+    <Description>BrowserCacheExtensions is a collection of extensions designed to cache non-confidential data in the browser.</Description>
     <PackageId>LocalStorage.Extensions</PackageId>
     <PackageProjectUrl>https://github.com/jjosh102/LocalStorage.Extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jjosh102/LocalStorage.Extensions</RepositoryUrl>
