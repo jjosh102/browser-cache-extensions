@@ -24,6 +24,8 @@ class Build : NukeBuild
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
+    string PackageVersion => Version?.TrimStart('v');
+
     Target Clean => _ => _
         .Executes(() =>
         {
@@ -48,7 +50,7 @@ class Build : NukeBuild
                 .ForEach(project => DotNetBuild(s => s
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
-                    .SetVersion(Version?.TrimStart('v'))
+                    .SetVersion(PackageVersion)
                     .EnableNoRestore()));
         });
 
@@ -61,7 +63,7 @@ class Build : NukeBuild
                 DotNetPack(s => s
                     .SetProject(project)
                     .SetConfiguration(Configuration)
-                    .SetVersion(Version?.TrimStart('v'))
+                    .SetVersion(PackageVersion)
                     .SetOutputDirectory(ArtifactsDirectory));
             }
         });
