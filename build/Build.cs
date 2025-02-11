@@ -8,7 +8,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 [GitHubActions("deploy-to-nuget",
     GitHubActionsImage.UbuntuLatest,
-    OnPushTags = new[] { "v*" },  // Runs when pushing a tag like "v1.0.0"
+    OnPushTags = new[] { "v*" },  
     InvokedTargets = new[] { nameof(Pack), nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" })]
 class Build : NukeBuild
@@ -16,6 +16,7 @@ class Build : NukeBuild
     public static int Main() => Execute<Build>(x => x.Pack);
 
     [Parameter] readonly string Configuration = "Release";
+    [Parameter] readonly string NugetApiKey = Environment.GetEnvironmentVariable("NUGET_API_KEY");
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
@@ -60,12 +61,9 @@ class Build : NukeBuild
             }
         });
 
-    bool IsRunningOnGitHubActions => Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true";
-
     Target Publish => _ => _
         .DependsOn(Pack)
-        .OnlyWhenDynamic(() => IsRunningOnGitHubActions)
-        .Requires(() => Environment.GetEnvironmentVariable("NUGET_API_KEY"))
+        .Requires(() => NugetApiKey)
         .Executes(() =>
         {
             SourceDirectory.GlobFiles(ArtifactsDirectory, "*.nupkg")
@@ -74,7 +72,7 @@ class Build : NukeBuild
                     DotNetNuGetPush(s => s
                         .SetTargetPath(package)
                         .SetSource("https://api.nuget.org/v3/index.json")
-                        .SetApiKey(Environment.GetEnvironmentVariable("NUGET_API_KEY")));
+                        .SetApiKey(NugetApiKey));
                 });
         });
 }

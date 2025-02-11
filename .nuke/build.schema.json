@@ -104,6 +104,9 @@
       "properties": {
         "Configuration": {
           "type": "string"
+        },
+        "NugetApiKey": {
+          "type": "string"
         }
       }
     },
