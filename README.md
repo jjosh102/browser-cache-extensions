@@ -1,6 +1,7 @@
 # BrowserCacheExtensions
 [![NuGet](https://img.shields.io/nuget/v/BrowserCache.Extensions.svg)](https://www.nuget.org/packages/BrowserCache.Extensions)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/BrowserCache.Extensions?logo=nuget)](https://www.nuget.org/packages/BrowserCache.Extensions)
+
 BrowserCacheExtensions is a collection of extensions designed to cache non-confidential data in the browser using popular libraries like [Blazored LocalStorage](https://github.com/Blazored/LocalStorage). Future plans include extending support to [Blazor.IndexedDB](https://github.com/wtulloch/Blazor.IndexedDB).
 
 ## Usage
