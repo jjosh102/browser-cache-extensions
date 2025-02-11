@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\LocalStorage.Extensions.csproj" />
+    <ProjectReference Include="..\src\BrowserCache.Extensions.LocalStorage.csproj" />
   </ItemGroup>
 
   <ItemGroup>

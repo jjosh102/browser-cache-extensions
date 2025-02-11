@@ -2,9 +2,9 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalStorage.Extensions", "src\LocalStorage.Extensions.csproj", "{C016F570-AC55-416A-7212-52D851EB3924}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserCache.Extensions.LocalStorage", "src\BrowserCache.Extensions.LocalStorage.csproj", "{C016F570-AC55-416A-7212-52D851EB3924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalStorage.Extensions.Tests", "tests\LocalStorage.Extensions.Tests.csproj", "{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserCache.Extensions.LocalStorage.Tests", "tests\BrowserCache.Extensions.LocalStorage.Tests.csproj", "{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
