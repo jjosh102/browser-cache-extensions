@@ -10,13 +10,21 @@ public static class LocalStorageSyncExtensions
         TimeSpan timeToLive,
         Func<T> generateCache)
     {
+
         if (localStorageService.TryGetCache(key, out T? cache))
             return cache;
 
-        var newData = generateCache();
-        var newCache = new LocalCacheItem<T>(newData, timeToLive);
-        localStorageService.SetItem(key, newCache);
-        return newData;
+        try
+        {
+            var newData = generateCache();
+            var newCache = new LocalCacheItem<T>(newData, timeToLive);
+            localStorageService.SetItem(key, newCache);
+            return newData;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Cache generation failed.", ex);
+        }
     }
 
     public static bool TryGetCache<T>(
@@ -28,13 +36,13 @@ public static class LocalStorageSyncExtensions
 
         var currentCache = localStorageService.GetItem<LocalCacheItem<T>>(key);
 
-        if (currentCache is null || currentCache.IsExpired())
+        if (currentCache is { } existingCache && !existingCache.IsExpired())
         {
-            cacheData = default;
-            return false;
+            cacheData = existingCache.Data;
+            return true;
         }
 
-        cacheData = currentCache.Data;
-        return true;
+        cacheData = default;
+        return false;
     }
 }

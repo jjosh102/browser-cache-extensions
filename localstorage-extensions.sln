@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalStorage.Extensions", "src\LocalStorage.Extensions.csproj", "{C016F570-AC55-416A-7212-52D851EB3924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalStorage.Extensions.Tests", "tests\LocalStorage.Extensions.Tests.csproj", "{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{C016F570-AC55-416A-7212-52D851EB3924}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C016F570-AC55-416A-7212-52D851EB3924}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C016F570-AC55-416A-7212-52D851EB3924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC88143-AFD4-40E5-8559-3E73EC5F0A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
