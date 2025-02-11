@@ -9,7 +9,7 @@ The `LocalStorageAsyncExtensions` class provides asynchronous methods for cachin
 
 ```csharp
 using Blazored.LocalStorage;
-using LocalStorage.Extensions;
+using BrowserCache.Extensions.LocalStorage;
 using System;
 using System.Threading.Tasks;
 
@@ -50,7 +50,7 @@ The `LocalStorageSyncExtensions` class offers synchronous methods for caching da
 
 ```csharp
 using Blazored.LocalStorage;
-using LocalStorage.Extensions;
+using BrowserCache.Extensions.LocalStorage;
 using System;
 
 public class Example
