@@ -1,7 +1,8 @@
 using Blazored.LocalStorage;
+using BrowserCache.Extensions.LocalStorage;
 using NSubstitute;
 
-namespace LocalStorage.Extensions.Tests;
+namespace BrowserCache.Extensions.LocalStorage.Tests;
 
 public class LocalStorageSyncExtensionsTests
 {

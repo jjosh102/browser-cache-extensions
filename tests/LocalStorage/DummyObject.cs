@@ -1,4 +1,4 @@
-namespace LocalStorage.Extensions.Tests;
+namespace BrowserCache.Extensions.LocalStorage.Tests;
 public class DummyObject
 {
     public int Id { get; set; }

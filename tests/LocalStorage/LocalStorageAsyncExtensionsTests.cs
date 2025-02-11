@@ -1,8 +1,8 @@
 ﻿using Blazored.LocalStorage;
+using BrowserCache.Extensions.LocalStorage;
 using NSubstitute;
 
-
-namespace LocalStorage.Extensions.Tests;
+namespace BrowserCache.Extensions.LocalStorage.Tests;
 
 public class LocalStorageAsyncExtensionsTests
 {
@@ -23,7 +23,9 @@ public class LocalStorageAsyncExtensionsTests
         _localStorageService.GetItemAsync<LocalCacheItem<DummyObject>>(key).Returns(cacheItem);
 
         // Act
-        var result = await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10), () => DummyFunction());
+        var result =
+            await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10),
+                () => DummyFunction());
 
         // Assert
         Assert.Equal(cachedData.Id, result?.Id);
@@ -40,12 +42,14 @@ public class LocalStorageAsyncExtensionsTests
         _localStorageService.GetItemAsync<LocalCacheItem<DummyObject>>(key).Returns((LocalCacheItem<DummyObject>?)null);
 
         // Act
-        var result = await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10), () => new ValueTask<DummyObject>(newData));
+        var result = await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10),
+            () => new ValueTask<DummyObject>(newData));
 
         // Assert
         Assert.Equal(newData.Id, result?.Id);
         Assert.Equal(newData.Name, result?.Name);
-        await _localStorageService.Received(1).SetItemAsync(key, Arg.Is<LocalCacheItem<DummyObject>>(item => item.Data == newData));
+        await _localStorageService.Received(1)
+            .SetItemAsync(key, Arg.Is<LocalCacheItem<DummyObject>>(item => item.Data == newData));
     }
 
     [Fact]
@@ -59,12 +63,14 @@ public class LocalStorageAsyncExtensionsTests
         _localStorageService.GetItemAsync<LocalCacheItem<DummyObject>>(key).Returns(expiredCacheItem);
 
         // Act
-        var result = await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10), () => new ValueTask<DummyObject>(newData));
+        var result = await _localStorageService.GetOrCreateCacheAsync<DummyObject>(key, TimeSpan.FromMinutes(10),
+            () => new ValueTask<DummyObject>(newData));
 
         // Assert
         Assert.Equal(newData.Id, result?.Id);
         Assert.Equal(newData.Name, result?.Name);
-        await _localStorageService.Received(1).SetItemAsync(key, Arg.Is<LocalCacheItem<DummyObject>>(item => item.Data == newData));
+        await _localStorageService.Received(1)
+            .SetItemAsync(key, Arg.Is<LocalCacheItem<DummyObject>>(item => item.Data == newData));
     }
 
     [Fact]

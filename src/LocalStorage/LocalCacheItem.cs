@@ -1,4 +1,4 @@
-namespace LocalStorage.Extensions;
+namespace BrowserCache.Extensions.LocalStorage;
 public record LocalCacheItem<T>(T? Data, TimeSpan? TimeToLive = null)
 {
     public DateTime Created { get; } = DateTime.UtcNow;

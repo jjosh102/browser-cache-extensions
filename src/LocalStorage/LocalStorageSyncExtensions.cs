@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 
-namespace LocalStorage.Extensions;
+namespace BrowserCache.Extensions.LocalStorage;
 
 public static class LocalStorageSyncExtensions
 {
