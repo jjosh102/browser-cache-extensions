@@ -51,9 +51,6 @@ class Build : NukeBuild
                 .ForEach(project => DotNetBuild(s => s
                     .SetProjectFile(project)
                     .SetConfiguration(Configuration)
-                    .SetAssemblyVersion(GitVersion.AssemblySemVer)
-                    .SetFileVersion(GitVersion.AssemblySemFileVer)
-                    .SetInformationalVersion(GitVersion.InformationalVersion)
                     .EnableNoRestore()));
         });
 
