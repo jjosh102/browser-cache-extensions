@@ -4,6 +4,20 @@
 
 BrowserCacheExtensions is a collection of extensions designed to cache non-confidential data in the browser using popular libraries like [Blazored LocalStorage](https://github.com/Blazored/LocalStorage). Future plans include extending support to [Blazor.IndexedDB](https://github.com/wtulloch/Blazor.IndexedDB).
 
+## Installing
+
+To install the package add the following line inside your csproj file with the latest version.
+
+```
+<PackageReference Include="BrowserCache.Extensions" Version="x.x.x" />
+```
+
+An alternative is to install via the .NET CLI with the following command:
+
+```
+dotnet add package BrowserCache.Extensions
+```
+
 ## Usage
 
 ### LocalStorageAsyncExtensions
