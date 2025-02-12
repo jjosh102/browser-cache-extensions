@@ -12,7 +12,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     OnPushTags = new[] { "v*" },
     InvokedTargets = new[] { nameof(Pack), nameof(Publish) },
     ImportSecrets = new[] { "NUGET_API_KEY" },
-    AutoGenerate =false)]
+    AutoGenerate = false)]
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
@@ -56,14 +56,13 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            foreach (var project in SourceDirectory.GlobFiles("**/*.csproj"))
-            {
-                DotNetPack(s => s
-                    .SetProject(project)
-                    .SetConfiguration(Configuration)
-                    .SetVersion(Version)
-                    .SetOutputDirectory(ArtifactsDirectory));
-            }
+            SourceDirectory.GlobFiles(SourceDirectory, "**/*.csproj")
+                .ForEach(project => DotNetPack(s => s
+                   .SetProject(project)
+                   .SetConfiguration(Configuration)
+                   .SetVersion(Version)
+                   .SetOutputDirectory(ArtifactsDirectory)));
+
         });
 
     Target Publish => _ => _

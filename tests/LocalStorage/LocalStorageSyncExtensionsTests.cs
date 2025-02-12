@@ -1,5 +1,4 @@
 using Blazored.LocalStorage;
-using BrowserCache.Extensions.LocalStorage;
 using NSubstitute;
 
 namespace BrowserCache.Extensions.LocalStorage.Tests;
