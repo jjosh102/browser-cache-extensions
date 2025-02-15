@@ -5,6 +5,6 @@ public record LocalCacheItem<T>(T? Data, TimeSpan? TimeToLive = null)
 
     public DateTime? ExpiresAt => TimeToLive.HasValue ? Created.Add(TimeToLive.Value) : null;
 
-    public bool IsExpired() => ExpiresAt is not { } exp || DateTime.UtcNow >= exp;
+    public bool IsExpired() => ExpiresAt is { } exp && DateTime.UtcNow >= exp;
 
 }
