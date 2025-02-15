@@ -36,13 +36,10 @@ public static class LocalStorageAsyncExtensions
         {
             var cache = await localStorageService.GetItemAsync<LocalCacheItem<T>>(key);
 
-            if (cache is null) return (false, default);
-
-            Console.WriteLine($"Cache retrieved for {key}. Expires at: {cache.ExpiresAt}. IsExpired: {cache.IsExpired()}");
-
-            return cache.IsExpired()
-                ? (false, default)
-                : (true, cache.Data);
+            return cache is { } existingCache && !existingCache.IsExpired()
+            ? (true, existingCache.Data)
+            : (false, default);
+            
         }
         catch (Exception)
         {

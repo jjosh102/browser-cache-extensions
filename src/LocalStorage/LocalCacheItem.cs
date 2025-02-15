@@ -1,10 +1,19 @@
 namespace BrowserCache.Extensions.LocalStorage;
-public record LocalCacheItem<T>(T? Data, TimeSpan? TimeToLive = null)
+public class LocalCacheItem<T>(T? data, TimeSpan? timeToLive = null)
 {
-    public DateTime Created { get; } = DateTime.UtcNow;
+    private DateTime _created = DateTime.UtcNow;
 
-    public DateTime? ExpiresAt => TimeToLive.HasValue ? Created.Add(TimeToLive.Value) : null;
+    public T? Data { get; init; } = data;
+
+    public TimeSpan? TimeToLive { get; } = timeToLive;
+
+    public DateTime Created
+    {
+        get => _created;
+        set => _created = value;
+    }
+
+    public DateTime? ExpiresAt => TimeToLive.HasValue ? _created.Add(TimeToLive.Value) : null;
 
     public bool IsExpired() => ExpiresAt is { } exp && DateTime.UtcNow >= exp;
-
 }
