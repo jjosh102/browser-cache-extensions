@@ -33,16 +33,25 @@ public static class LocalStorageSyncExtensions
         out T? cacheData)
     {
         ArgumentNullException.ThrowIfNullOrWhiteSpace(key);
-
-        var currentCache = localStorageService.GetItem<LocalCacheItem<T>>(key);
-
-        if (currentCache is { } existingCache && !existingCache.IsExpired())
+        try
         {
-            cacheData = existingCache.Data;
-            return true;
-        }
+            var currentCache = localStorageService.GetItem<LocalCacheItem<T>>(key);
 
-        cacheData = default;
-        return false;
+            if (currentCache is { } existingCache && !existingCache.IsExpired())
+            {
+                cacheData = existingCache.Data;
+                return true;
+            }
+
+            cacheData = default;
+            return false;
+        }
+        catch (Exception)
+        {
+            // Remove cache if anything happened 
+            localStorageService.RemoveItem(key);
+            cacheData = default;
+            return false;
+        }
     }
 }

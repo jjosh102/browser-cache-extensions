@@ -12,7 +12,7 @@ public static class LocalStorageAsyncExtensions
     {
         var (isCacheExist, cache) = await localStorageService.TryGetCacheAsync<T>(key);
         if (isCacheExist) return cache;
-        
+
         try
         {
             var newData = await generateCache();
@@ -27,15 +27,29 @@ public static class LocalStorageAsyncExtensions
     }
 
     public static async ValueTask<(bool isCacheExist, T? cacheItem)> TryGetCacheAsync<T>(
-        this ILocalStorageService localStorageService,
-        string key)
+         this ILocalStorageService localStorageService,
+         string key)
     {
         ArgumentNullException.ThrowIfNullOrWhiteSpace(key);
 
-        var cache = await localStorageService.GetItemAsync<LocalCacheItem<T>>(key);
-        return cache is { } existingCache && !existingCache.IsExpired()
-            ? (true, existingCache.Data)
-            : (false, default);
+        try
+        {
+            var cache = await localStorageService.GetItemAsync<LocalCacheItem<T>>(key);
+
+            if (cache is null) return (false, default);
+
+            Console.WriteLine($"Cache retrieved for {key}. Expires at: {cache.ExpiresAt}. IsExpired: {cache.IsExpired()}");
+
+            return cache.IsExpired()
+                ? (false, default)
+                : (true, cache.Data);
+        }
+        catch (Exception)
+        {
+            // Remove cache if anything happened 
+            await localStorageService.RemoveItemAsync(key);
+            return (false, default);
+        }
     }
 
 }
